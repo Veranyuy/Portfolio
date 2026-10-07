@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Veranyuy Karl Ayuni — IT & Digital Systems</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #EFF3F2;
+    --panel: #FFFFFF;
+    --panel-alt: #F5F8F7;
+    --border: rgba(16,32,44,0.12);
+    --border-strong: rgba(16,32,44,0.22);
+    --ink: #10202C;
+    --ink-soft: #4B5D66;
+    --ink-faint: #7C8B92;
+    --green: #1E9E6B;
+    --green-bg: rgba(30,158,107,0.10);
+    --amber: #C97B1E;
+    --amber-bg: rgba(201,123,30,0.12);
+    --blue: #2E6F9E;
+    --blue-bg: rgba(46,111,158,0.10);
+    --display: 'Space Grotesk', sans-serif;
+    --sans: 'Inter', sans-serif;
+    --mono: 'JetBrains Mono', monospace;
+    --maxw: 1180px;
+  }
+
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  html{ scroll-behavior:smooth; }
+
+  body{
+    background:
+      repeating-linear-gradient(0deg, rgba(16,32,44,0.035) 0, rgba(16,32,44,0.035) 1px, transparent 1px, transparent 42px),
+      repeating-linear-gradient(90deg, rgba(16,32,44,0.035) 0, rgba(16,32,44,0.035) 1px, transparent 1px, transparent 42px),
+      var(--bg);
+    color:var(--ink);
+    font-family:var(--sans);
+    -webkit-font-smoothing:antialiased;
+  }
+
+  a{ color:inherit; }
+  ::selection{ background:var(--ink); color:var(--bg); }
+  *:focus-visible{ outline:2px solid var(--blue); outline-offset:3px; }
+
+  .container{ max-width:var(--maxw); margin:0 auto; padding:0 32px; }
+
+  h1,h2,h3{ font-family:var(--display); font-weight:600; letter-spacing:-0.01em; line-height:1.08; }
+  p{ color:var(--ink-soft); line-height:1.65; }
+
+  .eyebrow{
+    font-family:var(--mono); font-size:12px; letter-spacing:.1em; text-transform:uppercase;
+    color:var(--blue); display:flex; align-items:center; gap:9px;
+  }
+  .eyebrow::before{ content:""; width:16px; height:1px; background:var(--blue); }
+
+  .pill{
+    display:inline-flex; align-items:center; gap:8px;
+    font-family:var(--mono); font-size:12px; letter-spacing:.04em;
+    padding:6px 12px 6px 10px; border-radius:20px;
+    border:1px solid var(--border-strong);
+    background:var(--panel);
+  }
+  .pill .dot{ width:7px; height:7px; border-radius:50%; flex:none; }
+  .dot-green{ background:var(--green); box-shadow:0 0 0 3px var(--green-bg); animation:pulse 2.2s ease-in-out infinite; }
+  .dot-amber{ background:var(--amber); box-shadow:0 0 0 3px var(--amber-bg); }
+  .dot-blue{ background:var(--blue); box-shadow:0 0 0 3px var(--blue-bg); }
+  @keyframes pulse{ 0%,100%{ opacity:1;} 50%{ opacity:.45;} }
+
+  /* ---------- HEADER ---------- */
+  .site-header{
+    position:sticky; top:0; z-index:100;
+    background:rgba(239,243,242,0.88);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--border);
+  }
+  .site-header .container{ display:flex; align-items:center; justify-content:space-between; height:74px; }
+  .logo{ display:flex; align-items:center; gap:10px; text-decoration:none; font-family:var(--mono); font-weight:600; font-size:14px; }
+  .logo svg{ width:24px; height:24px; }
+  .nav-wrap{ display:flex; align-items:center; gap:34px; }
+  nav.main-nav{ display:flex; align-items:center; gap:30px; }
+  nav.main-nav a{ font-family:var(--mono); font-size:13px; text-decoration:none; color:var(--ink-soft); transition:color .2s ease; }
+  nav.main-nav a:hover{ color:var(--ink); }
+  @media (max-width:840px){ nav.main-nav{ display:none; } }
+
+  /* ---------- HERO ---------- */
+  .hero{ padding:80px 0 60px; }
+  .hero-copy{ max-width:760px; }
+  .hero h1{ font-size:clamp(30px,4.6vw,50px); margin:20px 0 20px; }
+  .hero p.lede{ font-size:17px; max-width:58ch; margin-bottom:34px; }
+  .hero-actions{ display:flex; gap:14px; flex-wrap:wrap; margin-bottom:56px; }
+
+  .btn{
+    font-family:var(--mono); font-size:13px; letter-spacing:.02em; text-decoration:none;
+    padding:12px 20px; border-radius:4px; display:inline-flex; align-items:center; gap:8px;
+    transition:transform .2s ease, background .2s ease, color .2s ease, border-color .2s ease;
+  }
+  .btn-primary{ background:var(--ink); color:var(--bg); border:1px solid var(--ink); }
+  .btn-primary:hover{ transform:translateY(-2px); background:var(--blue); border-color:var(--blue); }
+  .btn-ghost{ background:transparent; color:var(--ink); border:1px solid var(--border-strong); }
+  .btn-ghost:hover{ transform:translateY(-2px); border-color:var(--ink); }
+
+  /* uptime panel */
+  .uptime-panel{
+    background:var(--panel); border:1px solid var(--border); border-radius:8px;
+    padding:26px 28px; display:grid; grid-template-columns:1.3fr 1fr 1fr 1fr; gap:24px;
+  }
+  .uptime-main{ border-right:1px solid var(--border); padding-right:24px; }
+  .uptime-label{ font-family:var(--mono); font-size:11px; letter-spacing:.09em; text-transform:uppercase; color:var(--ink-faint); margin-bottom:10px; }
+  .uptime-value{ font-family:var(--mono); font-size:clamp(20px,2.6vw,28px); font-weight:600; color:var(--green); white-space:nowrap; }
+  .stat-value{ font-family:var(--mono); font-size:clamp(18px,2.4vw,24px); font-weight:600; }
+  .stat-sub{ font-family:var(--mono); font-size:11px; color:var(--ink-faint); margin-top:6px; }
+
+  @media (max-width:900px){
+    .uptime-panel{ grid-template-columns:1fr 1fr; }
+    .uptime-main{ grid-column:1/-1; border-right:none; border-bottom:1px solid var(--border); padding-right:0; padding-bottom:20px; }
+  }
+
+  /* ---------- SECTIONS ---------- */
+  .section{ padding:100px 0; border-top:1px solid var(--border); }
+  .section-head{ display:flex; justify-content:space-between; align-items:flex-end; gap:24px; margin-bottom:48px; flex-wrap:wrap; }
+  .section-head h2{ font-size:clamp(24px,3.2vw,34px); margin-top:12px; }
+  .section-head p{ max-width:42ch; font-size:14px; }
+
+  /* ---------- SERVICES (skills) ---------- */
+  .service-table{ border:1px solid var(--border); border-radius:8px; overflow:hidden; background:var(--panel); }
+  .service-row{
+    display:grid; grid-template-columns:1.3fr 1fr 2fr; gap:20px; align-items:center;
+    padding:18px 24px; border-bottom:1px solid var(--border);
+  }
+  .service-row:last-child{ border-bottom:none; }
+  .service-row.head{
+    font-family:var(--mono); font-size:10.5px; letter-spacing:.08em; text-transform:uppercase;
+    color:var(--ink-faint); background:var(--panel-alt); padding:12px 24px;
+  }
+  .svc-name{ font-family:var(--display); font-weight:600; font-size:15px; }
+  .svc-status{ font-family:var(--mono); font-size:11.5px; display:flex; align-items:center; gap:7px; }
+  .svc-status .dot{ width:6px; height:6px; border-radius:50%; }
+  .svc-note{ font-size:13px; color:var(--ink-soft); }
+
+  @media (max-width:700px){
+    .service-row{ grid-template-columns:1fr; row-gap:6px; }
+    .service-row.head{ display:none; }
+  }
+
+  /* ---------- DEPLOYS (projects) ---------- */
+  .deploys{ display:flex; flex-direction:column; gap:1px; background:var(--border); border:1px solid var(--border); border-radius:8px; overflow:hidden; }
+  .deploy{
+    background:var(--panel); padding:26px 28px; display:grid;
+    grid-template-columns:110px 1fr auto; gap:24px; align-items:start;
+  }
+  .deploy-ver{ font-family:var(--mono); font-size:12px; color:var(--ink-faint); padding-top:3px; }
+  .deploy h3{ font-size:17px; margin-bottom:8px; }
+  .deploy p{ font-size:13.5px; margin-bottom:12px; max-width:60ch; }
+  .tag-row{ display:flex; gap:8px; flex-wrap:wrap; }
+  .tag{
+    font-family:var(--mono); font-size:10.5px; letter-spacing:.03em; text-transform:uppercase;
+    padding:4px 8px; border:1px solid var(--border-strong); border-radius:3px; color:var(--ink-soft);
+  }
+  .deploy-status{ text-align:right; white-space:nowrap; }
+  .deploy-date{ font-family:var(--mono); font-size:10.5px; color:var(--ink-faint); margin-top:8px; display:block; }
+  .deploy-links{ margin-top:10px; display:flex; flex-direction:column; gap:6px; align-items:flex-end; }
+  .deploy-links a{
+    font-family:var(--mono); font-size:10.5px; color:var(--blue); text-decoration:none;
+    border-bottom:1px solid transparent; transition:border-color .2s ease;
+  }
+  .deploy-links a:hover{ border-color:var(--blue); }
+
+  @media (max-width:760px){
+    .deploy{ grid-template-columns:1fr; }
+    .deploy-status{ text-align:left; }
+    .deploy-links{ align-items:flex-start; }
+  }
+
+  /* ---------- LOG (experience + education) ---------- */
+  .log{ border-left:1px solid var(--border-strong); margin-left:6px; }
+  .log-entry{ position:relative; padding:0 0 40px 34px; }
+  .log-entry:last-child{ padding-bottom:0; }
+  .log-entry::before{
+    content:""; position:absolute; left:-6px; top:4px; width:11px; height:11px;
+    border-radius:50%; background:var(--panel); border:2px solid var(--blue);
+  }
+  .log-time{ font-family:var(--mono); font-size:11.5px; color:var(--ink-faint); margin-bottom:6px; display:block; }
+  .log-entry h3{ font-size:17px; margin-bottom:6px; }
+  .log-entry .org{ font-family:var(--mono); font-size:12.5px; color:var(--blue); margin-bottom:10px; display:block; }
+  .log-entry p{ font-size:13.5px; max-width:64ch; }
+
+  /* ---------- ABOUT ---------- */
+  .about-grid{ display:grid; grid-template-columns:1fr 0.9fr; gap:56px; align-items:start; }
+  .about-bio p{ font-size:15.5px; margin-bottom:18px; max-width:58ch; }
+  .specs{ background:var(--panel); border:1px solid var(--border); border-radius:8px; overflow:hidden; }
+  .specs-head{
+    font-family:var(--mono); font-size:11px; letter-spacing:.08em; text-transform:uppercase;
+    color:var(--ink-faint); padding:14px 20px; background:var(--panel-alt); border-bottom:1px solid var(--border);
+  }
+  .spec-row{ display:flex; justify-content:space-between; gap:16px; padding:13px 20px; border-bottom:1px solid var(--border); font-family:var(--mono); font-size:12.5px; }
+  .spec-row:last-child{ border-bottom:none; }
+  .spec-row span:first-child{ color:var(--ink-faint); }
+  .spec-row span:last-child{ color:var(--ink); text-align:right; }
+
+  @media (max-width:900px){ .about-grid{ grid-template-columns:1fr; } }
+
+  /* ---------- CONTACT ---------- */
+  .contact{ background:var(--ink); color:var(--bg); }
+  .contact .eyebrow{ color:#7FD9B6; }
+  .contact .eyebrow::before{ background:#7FD9B6; }
+  .contact h2{ color:#fff; font-size:clamp(26px,3.6vw,40px); margin:16px 0 22px; max-width:18ch; }
+  .contact p.lede{ color:rgba(239,243,242,0.7); max-width:50ch; margin-bottom:36px; font-size:15px; }
+  .contact-grid{ display:grid; grid-template-columns:1fr 1fr; gap:40px; align-items:start; }
+  .json-card{
+    background:#0B171F; border:1px solid rgba(239,243,242,0.14); border-radius:8px;
+    padding:22px 24px; font-family:var(--mono); font-size:13px; line-height:1.9; overflow-x:auto;
+  }
+  .json-card .k{ color:#7FD9B6; }
+  .json-card .s{ color:#E8C07D; }
+  .json-card .p{ color:rgba(239,243,242,0.45); }
+  .contact-links{ display:flex; flex-direction:column; gap:16px; }
+  .contact-links a{
+    font-family:var(--mono); font-size:16px; text-decoration:none; color:#fff;
+    border-bottom:1px solid rgba(239,243,242,0.25); width:fit-content; padding-bottom:4px;
+    word-break:break-all;
+    transition:color .2s ease, border-color .2s ease;
+  }
+  .contact-links a:hover{ color:#7FD9B6; border-color:#7FD9B6; }
+
+  .contact-form-panel{
+    background:#0B171F; border:1px solid rgba(239,243,242,0.14); border-radius:8px;
+    padding:22px 24px;
+  }
+  .cf-head{
+    font-family:var(--mono); font-size:12px; letter-spacing:.05em; color:rgba(239,243,242,0.5);
+    margin-bottom:18px; display:flex; align-items:center; justify-content:space-between;
+  }
+  .cf-head span:first-child{ color:#7FD9B6; }
+  .cf-field{ margin-bottom:16px; }
+  .cf-field label{
+    display:block; font-family:var(--mono); font-size:11px; letter-spacing:.06em; text-transform:uppercase;
+    color:rgba(239,243,242,0.5); margin-bottom:8px;
+  }
+  .cf-field input, .cf-field textarea{
+    width:100%; background:rgba(239,243,242,0.05); border:1px solid rgba(239,243,242,0.18);
+    border-radius:4px; padding:11px 13px; font-family:var(--sans); font-size:13.5px; color:#fff;
+    resize:vertical;
+  }
+  .cf-field input::placeholder, .cf-field textarea::placeholder{ color:rgba(239,243,242,0.32); }
+  .cf-field input:focus, .cf-field textarea:focus{ outline:2px solid #7FD9B6; outline-offset:1px; border-color:transparent; }
+  .cf-honey{ position:absolute; left:-9999px; opacity:0; }
+  .cf-submit{
+    width:100%; justify-content:center; background:#EFF3F2; color:var(--ink); border:1px solid #EFF3F2;
+    cursor:pointer;
+  }
+  .cf-submit:hover{ background:#7FD9B6; border-color:#7FD9B6; color:#0B171F; }
+  .cf-submit:disabled{ opacity:.6; cursor:default; transform:none; }
+  .cf-status{
+    margin-top:14px; font-family:var(--mono); font-size:12px; display:none; align-items:center; gap:8px;
+  }
+  .cf-status.show{ display:flex; }
+  .cf-status .dot{ width:7px; height:7px; border-radius:50%; flex:none; }
+  .cf-status.ok .dot{ background:#7FD9B6; box-shadow:0 0 0 3px rgba(127,217,182,0.18); }
+  .cf-status.ok{ color:#7FD9B6; }
+  .cf-status.err .dot{ background:#E88C7D; box-shadow:0 0 0 3px rgba(232,140,125,0.18); }
+  .cf-status.err{ color:#E88C7D; }
+  .cf-status a{ color:inherit; text-decoration:underline; }
+
+  @media (max-width:820px){ .contact-grid{ grid-template-columns:1fr; } }
+
+  footer.site-footer{ background:var(--ink); color:rgba(239,243,242,0.5); border-top:1px solid rgba(239,243,242,0.12); }
+  footer.site-footer .container{
+    padding:20px 32px; display:flex; justify-content:space-between; align-items:center;
+    font-family:var(--mono); font-size:11px; flex-wrap:wrap; gap:10px;
+  }
+
+  .reveal{ opacity:0; transform:translateY(16px); transition:opacity .7s ease, transform .7s ease; }
+  .reveal.is-visible{ opacity:1; transform:translateY(0); }
+
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior:auto; }
+    .reveal{ opacity:1; transform:none; transition:none; }
+    .dot-green{ animation:none; }
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="container">
+    <a href="#top" class="logo">
+      <svg viewBox="0 0 24 24" fill="none">
+        <path d="M12 2 L21 7 V17 L12 22 L3 17 V7 Z" stroke="#10202C" stroke-width="1.3"/>
+        <path d="M12 2 V22 M3 7 L21 17 M21 7 L3 17" stroke="#2E6F9E" stroke-width="1" opacity="0.6"/>
+      </svg>
+      veranyuy.karl
+    </a>
+    <div class="nav-wrap">
+      <nav class="main-nav">
+        <a href="#services">Services</a>
+        <a href="#deploys">Deploys</a>
+        <a href="#log">Log</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <span class="pill"><span class="dot dot-green"></span>Open to opportunities</span>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-copy">
+        <div class="eyebrow">IT &amp; Digital Systems — Business Analysis · Software Development</div>
+        <h1>I connect business problems to systems that actually work.</h1>
+        <p class="lede">Veranyuy Karl Ayuni is a Computing with Business &amp; Management graduate based in Limbe, Cameroon, with hands-on experience across web platforms and a growing focus on cybersecurity and software development. Practical, detail-oriented, and comfortable moving between the technical side and the business side of a problem.</p>
+        <div class="hero-actions">
+          <a href="#deploys" class="btn btn-primary">View projects →</a>
+          <a href="#contact" class="btn btn-ghost">Open a ticket</a>
+        </div>
+      </div>
+
+      <div class="uptime-panel reveal">
+        <div class="uptime-main">
+          <div class="uptime-label">Time in computing</div>
+          <div class="uptime-value" id="uptime-counter">—</div>
+        </div>
+        <div>
+          <div class="uptime-label">Degree</div>
+          <div class="stat-value">BSc CS</div>
+          <div class="stat-sub">Univ. of Greenwich, 2026</div>
+        </div>
+        <div>
+          <div class="uptime-label">Credentials</div>
+          <div class="stat-value">4</div>
+          <div class="stat-sub">foundation diplomas</div>
+        </div>
+        <div>
+          <div class="uptime-label">Response time</div>
+          <div class="stat-value">&lt;24h</div>
+          <div class="stat-sub">to new messages</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES / SKILLS -->
+  <section class="section" id="services">
+    <div class="container">
+      <div class="section-head reveal">
+        <div>
+          <div class="eyebrow">Services</div>
+          <h2>What's running, and what's still building.</h2>
+        </div>
+        <p>An honest read on where things stand — some skills are established, some are actively being built up.</p>
+      </div>
+
+      <div class="service-table reveal">
+        <div class="service-row head">
+          <span>Skill</span><span>Status</span><span>Focus</span>
+        </div>
+
+        <div class="service-row">
+          <span class="svc-name">SharePoint</span>
+          <span class="svc-status"><span class="dot dot-green"></span>Operational</span>
+          <span class="svc-note">Site design, content &amp; permissions management</span>
+        </div>
+        <div class="service-row">
+          <span class="svc-name">WordPress</span>
+          <span class="svc-status"><span class="dot dot-green"></span>Operational</span>
+          <span class="svc-note">Site builds, plugins, content management</span>
+        </div>
+        <div class="service-row">
+          <span class="svc-name">Business Analysis</span>
+          <span class="svc-status"><span class="dot dot-green"></span>Operational</span>
+          <span class="svc-note">Requirements gathering, process mapping</span>
+        </div>
+        <div class="service-row">
+          <span class="svc-name">Mobile Development (Flutter / Dart)</span>
+          <span class="svc-status"><span class="dot dot-green"></span>Operational</span>
+          <span class="svc-note">Built &amp; shipped StyleLink, a live Flutter booking app</span>
+        </div>
+        <div class="service-row">
+          <span class="svc-name">Software Development</span>
+          <span class="svc-status"><span class="dot dot-amber"></span>Developing</span>
+          <span class="svc-note">Self-employed software engineering work, 2026</span>
+        </div>
+        <div class="service-row">
+          <span class="svc-name">Cybersecurity</span>
+          <span class="svc-status"><span class="dot dot-blue"></span>Exploring</span>
+          <span class="svc-note">Growing area of interest and study</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DEPLOYS / PROJECTS -->
+  <section class="section" id="deploys">
+    <div class="container">
+      <div class="section-head reveal">
+        <div>
+          <div class="eyebrow">Deploys</div>
+          <h2>Projects.</h2>
+        </div>
+        <p>What's been shipped, and what's currently in progress.</p>
+      </div>
+
+      <div class="deploys reveal">
+        <div class="deploy">
+          <div class="deploy-ver">v1.0</div>
+          <div>
+            <h3>StyleLink</h3>
+            <p>A premium booking platform connecting clients with beauty and barber professionals across Cameroon — built end-to-end in Flutter and deployed live on the web.</p>
+            <div class="tag-row"><span class="tag">Flutter</span><span class="tag">Dart</span><span class="tag">Firebase</span><span class="tag">Booking Platform</span></div>
+          </div>
+          <div class="deploy-status">
+            <span class="pill"><span class="dot dot-green"></span>Live</span>
+            <div class="deploy-links">
+              <a href="https://stylelink-505716.web.app/" target="_blank" rel="noopener">Live app ↗</a>
+              <a href="https://github.com/Veranyuy/stylelink" target="_blank" rel="noopener">Source ↗</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="deploy">
+          <div class="deploy-ver">v0.1</div>
+          <div>
+            <h3>GroundTruth — Football Scouting App</h3>
+            <p>A concept for helping scouts track the exact locations where players train, so talent can be watched live and verified in person — instead of relying on random clips online that can't be confirmed.</p>
+            <div class="tag-row"><span class="tag">Location-based</span><span class="tag">Sports Tech</span><span class="tag">Early-stage</span></div>
+          </div>
+          <div class="deploy-status">
+            <span class="pill"><span class="dot dot-amber"></span>In development</span>
+            <span class="deploy-date">Started 2026</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LOG / EXPERIENCE + EDUCATION -->
+  <section class="section" id="log">
+    <div class="container">
+      <div class="section-head reveal">
+        <div>
+          <div class="eyebrow">System Log</div>
+          <h2>Experience &amp; education.</h2>
+        </div>
+        <p>The path so far, most recent first.</p>
+      </div>
+
+      <div class="log reveal">
+        <div class="log-entry">
+          <span class="log-time">Feb 2026 — Mar 2026</span>
+          <h3>Software Engineer, Self-Employed</h3>
+          <span class="org">Cameroon</span>
+          <p>Independent software engineering work, including building and shipping StyleLink (a Flutter booking platform) and early development on the GroundTruth football scouting concept.</p>
+        </div>
+        <div class="log-entry">
+          <span class="log-time">Jan 2023 — Feb 2026</span>
+          <h3>BSc Computer Science</h3>
+          <span class="org">University of Greenwich</span>
+          <p>Bachelor of Science in Computer Science, completed as part of a Computing with Business &amp; Management pathway.</p>
+        </div>
+        <div class="log-entry">
+          <span class="log-time">Foundation studies</span>
+          <h3>Diplomas in Computing &amp; Business Management</h3>
+          <span class="org">IPMC Ghana</span>
+          <p>NCC Level 5 &amp; Level 4 Diplomas, and Level 5 &amp; Level 4 Diplomas in Computing with Business Management — the foundation route into the Greenwich degree.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="section" id="about">
+    <div class="container about-grid">
+      <div class="about-bio reveal">
+        <div class="eyebrow">About</div>
+        <h2 style="margin:16px 0 22px; font-size:clamp(22px,3vw,30px);">Practical about technology, curious about what's next.</h2>
+        <p>Veranyuy is a motivated, detail-oriented computing professional with hands-on experience across web platforms like SharePoint and WordPress, and a practical approach to solving both technical and business problems. Adaptability and problem-solving are the constants across every project, whether it's building out a site, mapping a business process, or figuring out how a scouting app should actually work in the field.</p>
+        <p>Currently building out the GroundTruth concept and deepening a growing interest in cybersecurity, while staying open to IT, business analysis, and software development opportunities.</p>
+      </div>
+      <div class="specs reveal">
+        <div class="specs-head">whoami</div>
+        <div class="spec-row"><span>Name</span><span>Veranyuy Karl Ayuni</span></div>
+        <div class="spec-row"><span>Location</span><span>Limbe, Southwest, Cameroon</span></div>
+        <div class="spec-row"><span>Focus</span><span>IT Systems &amp; Business Analysis</span></div>
+        <div class="spec-row"><span>Currently exploring</span><span>Cybersecurity</span></div>
+        <div class="spec-row"><span>Core platforms</span><span>SharePoint, WordPress, Flutter</span></div>
+        <div class="spec-row"><span>GitHub</span><span>github.com/Veranyuy</span></div>
+        <div class="spec-row"><span>Availability</span><span>Open to opportunities</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="section contact" id="contact">
+    <div class="container">
+      <div class="eyebrow reveal">Get in touch</div>
+      <h2 class="reveal">Currently open to new opportunities.</h2>
+      <p class="lede reveal">IT &amp; digital systems roles, business analyst positions, or software development work — all welcome. Replies within a day.</p>
+
+      <div class="contact-grid">
+        <div class="json-card reveal">
+<span class="p">{</span><br>
+&nbsp;&nbsp;<span class="k">"status"</span><span class="p">:</span> <span class="s">"open_to_work"</span><span class="p">,</span><br>
+&nbsp;&nbsp;<span class="k">"email"</span><span class="p">:</span> <span class="s">"veranyuykarlayuni@gmail.com"</span><span class="p">,</span><br>
+&nbsp;&nbsp;<span class="k">"location"</span><span class="p">:</span> <span class="s">"Limbe, Cameroon"</span><span class="p">,</span><br>
+&nbsp;&nbsp;<span class="k">"response_time"</span><span class="p">:</span> <span class="s">"&lt; 24h"</span><br>
+<span class="p">}</span>
+        </div>
+        <div class="contact-form-panel reveal">
+          <div class="cf-head"><span>POST /contact</span><span>application/json</span></div>
+          <form id="contact-form" action="https://formsubmit.co/ajax/veranyuykarlayuni@gmail.com" method="POST">
+            <input type="text" name="_honey" class="cf-honey" tabindex="-1" autocomplete="off">
+            <input type="hidden" name="_subject" value="New message from portfolio site">
+            <input type="hidden" name="_template" value="table">
+            <input type="hidden" name="_captcha" value="false">
+            <div class="cf-field">
+              <label for="cf-name">Name</label>
+              <input type="text" id="cf-name" name="name" placeholder="Your name" required>
+            </div>
+            <div class="cf-field">
+              <label for="cf-email">Email</label>
+              <input type="email" id="cf-email" name="email" placeholder="you@example.com" required>
+            </div>
+            <div class="cf-field">
+              <label for="cf-message">Message</label>
+              <textarea id="cf-message" name="message" rows="4" placeholder="What would you like to say?" required></textarea>
+            </div>
+            <button type="submit" class="btn cf-submit">Send request →</button>
+            <div class="cf-status" id="cf-status"><span class="dot"></span><span id="cf-status-text"></span></div>
+          </form>
+        </div>
+      </div>
+
+      <div class="contact-links reveal" style="margin-top:28px;">
+        <a href="mailto:veranyuykarlayuni@gmail.com">veranyuykarlayuni@gmail.com</a>
+        <a href="https://www.linkedin.com/in/veranyuykarl-56967632a" target="_blank" rel="noopener">linkedin.com/in/veranyuykarl</a>
+        <a href="https://github.com/Veranyuy" target="_blank" rel="noopener">github.com/Veranyuy</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <span>© 2026 Veranyuy Karl Ayuni</span>
+    <span>Status page inspired. Open to new opportunities.</span>
+  </div>
+</footer>
+
+<script>
+(function(){
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* live "time in computing" counter, since start of CS degree */
+  const start = new Date('2023-01-01T00:00:00Z');
+  const el = document.getElementById('uptime-counter');
+  function fmt(){
+    let diff = Math.floor((Date.now() - start.getTime())/1000);
+    const years = Math.floor(diff / (365.25*24*3600)); diff -= Math.floor(years*365.25*24*3600);
+    const days = Math.floor(diff / 86400); diff -= days*86400;
+    const hours = Math.floor(diff/3600); diff -= hours*3600;
+    const mins = Math.floor(diff/60); diff -= mins*60;
+    const secs = diff;
+    const pad = n => String(n).padStart(2,'0');
+    el.textContent = `${years}y ${days}d ${pad(hours)}:${pad(mins)}:${pad(secs)}`;
+  }
+  fmt();
+  setInterval(fmt, 1000);
+
+  /* contact form submit */
+  const form = document.getElementById('contact-form');
+  if(form){
+    const statusBox = document.getElementById('cf-status');
+    const statusText = document.getElementById('cf-status-text');
+    const submitBtn = form.querySelector('.cf-submit');
+
+    function setStatus(kind, text){
+      statusBox.classList.remove('ok','err');
+      statusBox.classList.add('show', kind);
+      statusText.textContent = text;
+    }
+
+    form.addEventListener('submit', function(e){
+      e.preventDefault();
+      if(form.querySelector('.cf-honey').value){ return; } // honeypot tripped, silently drop
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Sending…';
+
+      fetch(form.action, {
+        method: 'POST',
+        body: new FormData(form),
+        headers: { 'Accept': 'application/json' }
+      })
+      .then(res => {
+        if(res.ok){
+          setStatus('ok', 'Message sent — thanks, I\'ll reply within a day.');
+          form.reset();
+        } else {
+          throw new Error('Request failed');
+        }
+      })
+      .catch(() => {
+        setStatus('err', 'Something went wrong — email veranyuykarlayuni@gmail.com directly instead.');
+      })
+      .finally(() => {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Send request →';
+      });
+    });
+  }
+
+  /* scroll reveal */
+  const els = document.querySelectorAll('.reveal');
+  if(reduced || !('IntersectionObserver' in window)){
+    els.forEach(e=>e.classList.add('is-visible'));
+  } else {
+    const io = new IntersectionObserver((entries)=>{
+      entries.forEach(entry=>{
+        if(entry.isIntersecting){
+          entry.target.classList.add('is-visible');
+          io.unobserve(entry.target);
+        }
+      });
+    },{threshold:0.12});
+    els.forEach(e=>io.observe(e));
+  }
+})();
+</script>
+
+</body>
+</html>
